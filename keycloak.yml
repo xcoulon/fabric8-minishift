@@ -1,0 +1,67 @@
+name: keycloak
+containers:
+- image: registry.devshift.net/fabric8-services/keycloak-postgres:latest
+  args:
+    - '-b $(INTERNAL_POD_IP)'
+    - '-Djgroups.bind_addr=global'
+    - '-Djboss.node.name=$(INTERNAL_POD_IP)'
+    - '-Dinfinispan.stagger.delay=0'
+    - -Dkeycloak.migration.action=import
+    - -Dkeycloak.migration.provider=singleFile
+    - -Dkeycloak.migration.file=/opt/jboss/keycloak/standalone/configuration/import/fabric8-realm.json
+    - -Dkeycloak.migration.strategy=IGNORE_EXISTING
+  env:
+  - name: INTERNAL_POD_IP
+    valueFrom:
+      fieldRef:
+        fieldPath: status.podIP
+  - name: KEYCLOAK_USER
+    value: "admin"
+  - name: KEYCLOAK_PASSWORD
+    value: "admin"
+  - name: POSTGRES_DATABASE
+    value: "postgres"
+  - name: POSTGRES_USER
+    value: "postgres"
+  - name: POSTGRES_PASSWORD
+    value: "mysecretpassword"
+  - name: POSTGRES_ADMIN_PASSWORD
+    value: "mysecretpassword"
+  - name: POSTGRES_PORT_5432_TCP_ADDR
+    value: "keycloak-db"
+  - name: POSTGRES_PORT_5432_TCP_PORT
+    value: "5432"
+  - name: JAVA_OPTS
+    value: >-
+      -server -Xms256m -Xmx1434m -XX:MetaspaceSize=96M
+      -XX:+HeapDumpOnOutOfMemoryError
+      -XX:+UseParallelGC
+      -XX:MinHeapFreeRatio=20
+      -XX:MaxHeapFreeRatio=40
+      -XX:GCTimeRatio=4
+      -XX:+PrintGCDetails
+      -XX:AdaptiveSizePolicyWeight=90
+      -XX:MaxMetaspaceSize=512m
+      -Djava.net.preferIPv4Stack=true
+      -Djboss.modules.system.pkgs=org.jboss.byteman
+      -Djava.awt.headless=true
+      -XX:+PrintGC
+  volumeMounts:
+  - name: keycloak-config
+    mountPath: /opt/jboss/keycloak/standalone/configuration/import
+volumes:
+- name: keycloak-config
+  configMap:
+    name: keycloak-cm
+    items:
+    - key: fabric8-realm.json
+      path: fabric8-realm.json
+services:
+- name: keycloak
+  type: NodePort
+  ports:
+  - port: 8080
+    nodePort: 31500
+  - port: 7600
+  - port: 47600
+  - port: 57600

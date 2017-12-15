@@ -1,0 +1,40 @@
+name: tenant
+containers:
+- image: docker.io/fabric8/fabric8-tenant:dev
+  env:
+  - name: F8_AUTH_URL
+    value: "http://[[ MINISHIFT_IP ]]:31000"
+  - name: F8_WIT_URL
+    value: "http://[[ MINISHIFT_IP ]]:31300"
+  - name: F8_DEVELOPER_MODE_ENABLED
+    value: "true"
+  - name: F8_POSTGRES_HOST
+    value: "tenant-db"
+  - name: F8_POSTGRES_DATABASE
+    value: "postgres"
+  - name: F8_TOGGLES_URL
+    value: "http://toggles:4242/api"
+  - name: F8_KEYCLOAK_URL
+    # value: "https://sso.prod-preview.openshift.io"
+    value: "http://[[ MINISHIFT_IP ]]:31100"
+  - name: F8_OPENSHIFT_TENANT_MASTERURL
+    # value: "https://192.168.64.12:8443"
+    value: https://[[ MINISHIFT_IP ]]:8443
+  - name: F8_API_SERVER_INSECURE_SKIP_TLS_VERIFY
+    value: "true"
+  - name: F8_OPENSHIFT_SERVICE_TOKEN
+  # the output of `oc whoami -t` for the `developer` user
+    # value: "q5WHDFnUpAcWq5HREZUt6CPKnIeuDcnGiu1bmSIHNyU"
+    value: [[ DEVELOPER_TOKEN ]]
+  - name: F8_TEMPLATE_DOMAIN
+    value: "d800.free-int.openshiftapps.com"
+  - name: F8_TEMPLATE_RECOMMENDER_EXTERNAL_NAME
+    value: "https://recommender.api.prod-preview.openshift.io"
+  - name: F8_TEMPLATE_RECOMMENDER_API_TOKEN
+    value: "foo"
+services:
+- name: tenant
+  type: NodePort
+  ports:
+    - port: 8080
+      nodePort: 31100

@@ -1,0 +1,19 @@
+name: wit
+containers:
+containers:
+- image: docker.io/fabric8/fabric8-wit:latest
+  env:
+  - name: F8_AUTH_URL
+    value: "http://[[ MINISHIFT_IP ]]:31000"
+  - name: F8_TENANT_SERVICEURL
+    value: "http://tenant:8080"
+  - name: F8_DEVELOPER_MODE_ENABLED
+    value: "true"
+  - name: F8_POSTGRES_HOST
+    value: "wit-db"
+services:
+- name: wit
+  type: NodePort
+  ports:
+  - port: 8080
+    nodePort: 31300

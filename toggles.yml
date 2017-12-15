@@ -1,0 +1,12 @@
+name: toggles
+containers:
+- image: registry.devshift.net/fabric8-services/fabric8-toggles:latest
+  env:
+  - name: DATABASE_URL
+    value: "postgres://user:password@toggles-db:5432/unleashdb"
+services:
+- name: toggles
+  type: NodePort
+  ports:
+    - port: 4242
+      nodePort: 31200

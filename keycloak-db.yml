@@ -1,0 +1,12 @@
+name: keycloak-db
+containers:
+- image: registry.centos.org/postgresql/postgresql:9.6
+  env:
+  - name: POSTGRESQL_ADMIN_PASSWORD
+    value: mysecretpassword
+services:
+- name: keycloak-db
+  type: NodePort
+  ports:
+  - port: 5432
+    nodeport: 31510
