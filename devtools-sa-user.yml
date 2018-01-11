@@ -1,0 +1,7 @@
+apiVersion: v1
+identities:
+- anypassword:devtools-sa
+kind: User
+metadata:
+  name: devtools-sa
+  

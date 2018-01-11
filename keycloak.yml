@@ -1,4 +1,6 @@
 name: keycloak
+labels: 
+  service: keycloak
 containers:
 - image: registry.devshift.net/fabric8-services/keycloak-postgres:latest
   args:

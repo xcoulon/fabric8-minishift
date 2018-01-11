@@ -1,4 +1,6 @@
 name: tenant-db
+labels: 
+  service: tenant
 containers:
 - image: registry.centos.org/postgresql/postgresql:9.6
   env:

@@ -1,4 +1,6 @@
 name: wit-db
+labels:
+  service: wit
 containers:
 - image: registry.centos.org/postgresql/postgresql:9.6
   env:

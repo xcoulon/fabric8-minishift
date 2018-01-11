@@ -1,4 +1,6 @@
 name: toggles-db
+labels:
+  service: toggles
 containers:
 - image: registry.centos.org/postgresql/postgresql:9.6
   env:

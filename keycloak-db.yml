@@ -1,4 +1,6 @@
 name: keycloak-db
+labels: 
+  service: keycloak
 containers:
 - image: registry.centos.org/postgresql/postgresql:9.6
   env:

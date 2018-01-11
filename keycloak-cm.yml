@@ -5,7 +5,6 @@ configMaps:
       {
         "realm": "fabric8-test",
         "enabled": true,
-        # "loginTheme": "fabric8",
         "privateKey": "MIICWgIBAAKBgEjlZN1Q7wg5QOHzXGqyNf/q/VHQ0oJ2NdeODs18xuZJGJLDeP8eNPckklgVoTIhVs99Z5tLM1hP+9Gmw825uUWFvl4x50j2am25AH8iiPhkyL6hLzu8sbwwrU9GTirYjES9FSQUazNiV1XXHdyLdoFm7w33d5hlWiOS86cfFsF7AgMBAAECgYAPNML4o9RpC8BsId7qZuh6zSMwuPXgvxX2NC0EUn4PNbpJizsnRL7ZuyhH9aMdmPTJ7af6LhK03mJyVm5L8O0jyXCbsigdMU1H1xRfbgRNQ5bDzGeBsa9EHyikgCnES5tYpUJBts67J9SXMNzU1CrIb3bOAHlizvij3hOJKJeAiQJBAJBsTGvVkXg1SgIvnN6uyHSHwWHKiXE9WBCUPNFk2Ir6kCaIDy0x0yGnIAqP7JgIxMeGC569xVfDpF/fr2i1oB8CQQCBNqI1wNVos5eLhJqwF58KYDKmfeF66BBWnPICMT0UZ/YBLW5RTBo5/T9gzlKBMKReQjzz+VZCAvpwaoOEQcMlAkBqrsUo5uMFNAAOa1NqnxvOELYF4dHzR0g1PvtKBj97MimnfNwRG3wFoOmnQ7eWeuu5I0iUI0SSVx+l/psZMwkrAkBAL452WzrnjsbJ5G4e6Sz0r4KZl9BpCFwNWlsRYbowp8/ZF+ND+STSB43zHap4SFxuAkNbAlGp6ubS7uYzzaMNAkBDToIt1/QGPLA3bZW5ua7Kgumw1m21ycPfuAdbIirXLtMzHdwuqnBALlII9pEeN1LKm74upk0d9nN+qKNeOdPH",
         "publicKey": "MIGeMA0GCSqGSIb3DQEBAQUAA4GMADCBiAKBgEjlZN1Q7wg5QOHzXGqyNf/q/VHQ0oJ2NdeODs18xuZJGJLDeP8eNPckklgVoTIhVs99Z5tLM1hP+9Gmw825uUWFvl4x50j2am25AH8iiPhkyL6hLzu8sbwwrU9GTirYjES9FSQUazNiV1XXHdyLdoFm7w33d5hlWiOS86cfFsF7AgMBAAE=",
         "sslRequired": "external",
@@ -38,7 +37,8 @@ configMaps:
               "http://wit*",
               "http://jenkins/securityRealm/finishLogin",
               "http://keycloak/*",
-              "http://192.168.64.12:*"
+              "http://192.168.64.12:*",
+              "http://*.192.168.64.12:*"
             ],
             "webOrigins": [
               "*"

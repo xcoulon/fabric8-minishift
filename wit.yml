@@ -1,5 +1,6 @@
 name: wit
-containers:
+labels:
+  service: wit
 containers:
 - image: docker.io/fabric8/fabric8-wit:latest
   env:
@@ -7,6 +8,8 @@ containers:
     value: "http://[[ MINISHIFT_IP ]]:31000"
   - name: F8_TENANT_SERVICEURL
     value: "http://tenant:8080"
+  - name: F8_TOGGLES_SERVICEURL
+    value: "http://togglesservice:8080"
   - name: F8_DEVELOPER_MODE_ENABLED
     value: "true"
   - name: F8_POSTGRES_HOST
