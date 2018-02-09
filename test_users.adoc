@@ -1,0 +1,10 @@
+= Generating test tokens
+
+== Keycloak settings
+
+In the http://${minishift ip}:31500[Keycloak admin console], go to the http://192.168.99.100:31500/auth/admin/master/console/#/realms/fabric8-test/users[users] config page and create 2 users, named `testuser` and `testuser2` with the password equal to the username.
+Don't forget to:
+- set an email address and check the `email verified` option
+- clear the `required user action` 
+- add an `approved`=`true` attribute
+- save!

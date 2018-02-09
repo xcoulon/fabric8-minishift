@@ -1,16 +1,17 @@
 name: toggles-service
 labels:
   service: toggles-service
-containers:
-- image: 172.30.1.1:5000/fabric8/f8toggles-service:latest
-  env:
-  - name: F8_AUTH_URL
-    value: "http://auth:8089"
-  - name: F8_TOGGLES_URL
-    value: "http://toggles:4242/api"
-  - name: F8_KEYCLOAK_URL
-    # value: "https://sso.prod-preview.openshift.io"
-    value: "http://keycloak:8080"
+deployments:
+  - containers:
+    - image: 172.30.1.1:5000/fabric8/f8toggles-service:latest
+    env:
+    - name: F8_AUTH_URL
+      value: "http://auth:8089"
+    - name: F8_TOGGLES_URL
+      value: "http://toggles:4242/api"
+    - name: F8_KEYCLOAK_URL
+      # value: "https://sso.prod-preview.openshift.io"
+      value: "http://keycloak:8080"
 services:
 - name: toggles-service
   type: NodePort

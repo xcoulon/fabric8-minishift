@@ -53,7 +53,7 @@ tmp:
 
 tmp/developer.txt: tmp
 	echo "logging on $(MINISHIFT_IP) with $(OC_USERNAME) account..."
-	@oc login https://$(MINISHIFT_IP):8443 -u $(OC_USERNAME) -p $(OC_PASSWORD) 1>/dev/null
+	@oc login --insecure-skip-tls-verify=true https://$(MINISHIFT_IP):8443 -u $(OC_USERNAME) -p $(OC_PASSWORD) 1>/dev/null
 	@oc whoami -t > tmp/developer.txt
 
 tmp/serviceaccount.txt: tmp

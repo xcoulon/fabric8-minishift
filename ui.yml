@@ -1,41 +1,42 @@
 name: ui
-containers:
-- image: registry.devshift.net/fabric8-ui/fabric8-ui:309eeb
-  env:
-  - name: FABRIC8_SSO_API_URL
-    value: "http://[[ MINISHIFT_IP ]]:31500"
-  - name: FABRIC8_WIT_API_URL
-    value: "http://[[ MINISHIFT_IP ]]:31300/api/"
-  - name: FABRIC8_AUTH_API_URL
-    value: "http://auth-fabric8.192.168.64.12.nip.io/api/"
-  - name: FABRIC8_TENANT_API_URL
-    value: "http://[[ MINISHIFT_IP ]]:31100"
-  - name: FABRIC8_RECOMMENDER_API_URL
-    value: "http://api-bayesian.dev.rdu2c.fabric8.io/api/v1/"
-  - name: FABRIC8_REALM
-    value: "fabric8-test"
-  - name: K8S_API_SERVER_PROTOCOL
-    value: "https"
-  - name: K8S_API_SERVER_BASE_PATH
-    value: "/_p/oso"
-  - name: PROXY_PASS_URL
-    value: "http://[[ MINISHIFT_IP ]]"
-  - name: OAUTH_ISSUER
-    value: "http://[[ MINISHIFT_IP ]]"
-  - name: OAUTH_CLIENT_ID
-    value: "fabric8"
-  - name: OAUTH_AUTHORIZE_URI
-    value: ""
-  - name: AUTH_LOGOUT_URI
-    value: ""
-  - name: FABRIC8_FORGE_API_URL
-    value: ""
-  - name: FABRIC8_FORGE_URL
-    value: ""
-  - name: FABRIC8_PIPELINES_NAMESPACE
-    value: ""
-  - name: openshiftProxiedApiServer
-    value: ""
+deployments:
+  - containers:
+    - image: registry.devshift.net/fabric8-ui/fabric8-ui:309eeb
+      env:
+      - name: FABRIC8_SSO_API_URL
+        value: "http://[[ MINISHIFT_IP ]]:31500"
+      - name: FABRIC8_WIT_API_URL
+        value: "http://[[ MINISHIFT_IP ]]:31300/api/"
+      - name: FABRIC8_AUTH_API_URL
+        value: "http://auth-fabric8.192.168.64.12.nip.io/api/"
+      - name: FABRIC8_TENANT_API_URL
+        value: "http://[[ MINISHIFT_IP ]]:31100"
+      - name: FABRIC8_RECOMMENDER_API_URL
+        value: "http://api-bayesian.dev.rdu2c.fabric8.io/api/v1/"
+      - name: FABRIC8_REALM
+        value: "fabric8-test"
+      - name: K8S_API_SERVER_PROTOCOL
+        value: "https"
+      - name: K8S_API_SERVER_BASE_PATH
+        value: "/_p/oso"
+      - name: PROXY_PASS_URL
+        value: "http://[[ MINISHIFT_IP ]]"
+      - name: OAUTH_ISSUER
+        value: "http://[[ MINISHIFT_IP ]]"
+      - name: OAUTH_CLIENT_ID
+        value: "fabric8"
+      - name: OAUTH_AUTHORIZE_URI
+        value: ""
+      - name: AUTH_LOGOUT_URI
+        value: ""
+      - name: FABRIC8_FORGE_API_URL
+        value: ""
+      - name: FABRIC8_FORGE_URL
+        value: ""
+      - name: FABRIC8_PIPELINES_NAMESPACE
+        value: ""
+      - name: openshiftProxiedApiServer
+        value: ""
 services:
 - name: ui
   type: NodePort
