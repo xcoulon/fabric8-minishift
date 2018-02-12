@@ -18,3 +18,8 @@ services:
   ports:
     - port: 8080
       nodePort: 31600
+routes:	
+- name: toggles-service	
+  to:	
+    kind: Service	
+    name: toggles-service
