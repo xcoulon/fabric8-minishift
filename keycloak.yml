@@ -68,3 +68,8 @@ services:
   - port: 7600
   - port: 47600
   - port: 57600
+routes:	
+- name: keycloak	
+  to:	
+    kind: Service	
+    name: keycloak
