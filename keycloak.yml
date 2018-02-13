@@ -52,13 +52,13 @@ deployments:
       volumeMounts:
       - name: keycloak-config
         mountPath: /opt/jboss/keycloak/standalone/configuration/import
-volumes:
-- name: keycloak-config
-  configMap:
-    name: keycloak-cm
-    items:
-    - key: fabric8-realm.json
-      path: fabric8-realm.json
+    volumes:
+    - name: keycloak-config
+      configMap:
+        name: keycloak-cm
+        items:
+        - key: fabric8-realm.json
+          path: fabric8-realm.json
 services:
 - name: keycloak
   type: NodePort
