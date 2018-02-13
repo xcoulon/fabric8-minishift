@@ -33,8 +33,10 @@ OC_SA_USERNAME := devtools-sa
 OC_SA_PASSWORD := devtools-sa
 MINISHIFT_IP := $(shell minishift ip)
 
-.PHONY: 
-init: login
+.PHONY: init
+init: tmp ./tmp/init.touch
+
+./tmp/init.touch:
 	@echo "Initializing accounts"
 	@oc adm policy  --as system:admin add-cluster-role-to-user cluster-admin developer #make sure that `developer` account is cluster admin
 
@@ -42,6 +44,7 @@ init: login
 	@oc adm policy  --as system:admin add-cluster-role-to-user cluster-admin devtools-sa
 	
 	@oc apply -f devtools-sa-user.yml
+	@touch ./tmp/init.touch
 
 .PHONY: clean
 clean:
@@ -51,19 +54,20 @@ clean:
 tmp:
 	@mkdir ./tmp
 
-tmp/developer.txt: tmp
+.PHONY: login-dev
+login-dev: init
 	echo "logging on $(MINISHIFT_IP) with $(OC_USERNAME) account..."
 	@oc login --insecure-skip-tls-verify=true https://$(MINISHIFT_IP):8443 -u $(OC_USERNAME) -p $(OC_PASSWORD) 1>/dev/null
 	@oc whoami -t > tmp/developer.txt
 
-tmp/serviceaccount.txt: tmp
+.PHONY: login-sa
+login-sa: init
 	echo "logging on $(MINISHIFT_IP) with $(OC_SA_USERNAME) account..."
 	@oc login https://$(MINISHIFT_IP):8443 -u $(OC_SA_USERNAME) -p $(OC_SA_PASSWORD) 1>/dev/null
 	@oc whoami -t > tmp/serviceaccount.txt
 
-
 .PHONY: login
-login: tmp/developer.txt tmp/serviceaccount.txt
+login: login-dev
 
 .PHONY: deploy-kc
 deploy-kc: $(KEDGE_BIN) login
