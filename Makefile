@@ -35,7 +35,7 @@ MINISHIFT_IP := $(shell minishift ip)
 
 .PHONY: 
 init: login
-	@echo "Initializing accounts"
+	echo "Initializing accounts"
 	@oc adm policy  --as system:admin add-cluster-role-to-user cluster-admin developer #make sure that `developer` account is cluster admin
 
 	@oc apply -f developer-user.yml
@@ -66,39 +66,39 @@ tmp/serviceaccount.txt: tmp
 login: tmp/developer.txt tmp/serviceaccount.txt
 
 .PHONY: deploy-kc
-deploy-kc: $(KEDGE_BIN) login
+deploy-kc: $(KEDGE_BIN) init
 	@kedge apply -f keycloak-cm.yml
 	@kedge apply -f keycloak-db.yml
 	@kedge apply -f keycloak.yml
 	
 .PHONY: deploy-auth
-deploy-auth: $(KEDGE_BIN) login
+deploy-auth: $(KEDGE_BIN) init
 	@kedge apply -f auth-db.yml
 	@MINISHIFT_IP=$(MINISHIFT_IP) kedge apply -f auth.yml
 
 .PHONY: deploy-toggles
-deploy-toggles: $(KEDGE_BIN) login
+deploy-toggles: $(KEDGE_BIN) init
 	@kedge apply -f toggles-db.yml
 	@kedge apply -f toggles.yml
 
 .PHONY: deploy-toggles-service
-deploy-toggles-service: $(KEDGE_BIN) login
+deploy-toggles-service: $(KEDGE_BIN) init
 	@kedge apply -f toggles-service.yml
 
 .PHONY: deploy-tenant
-deploy-tenant: $(KEDGE_BIN) login
+deploy-tenant: $(KEDGE_BIN) init
 	@echo using $(SA_TOKEN) service token to deploy tenant service
 	@kedge apply -f tenant-db.yml
 	@MINISHIFT_IP=$(MINISHIFT_IP) SERVICE_TOKEN=`cat tmp/serviceaccount.txt` kedge apply -f tenant.yml
 
 .PHONY: deploy-wit
-deploy-wit: $(KEDGE_BIN) login
+deploy-wit: $(KEDGE_BIN) init
 	@kedge apply -f wit-db.yml
 	@MINISHIFT_IP=$(MINISHIFT_IP) kedge apply -f wit.yml
 
 
 .PHONY: deploy-ui
-deploy-ui: $(KEDGE_BIN) login
+deploy-ui: $(KEDGE_BIN) init
 	@MINISHIFT_IP=$(MINISHIFT_IP) kedge apply -f ui.yml
 
 
