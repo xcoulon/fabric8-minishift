@@ -1,3 +1,8 @@
+FABRIC8_MARKER=.fabric8
+FABRIC8_PROJECT=fabric8
+#TOGGLES_ORG=172.30.1.1:5000/fabric8 ## to deploy from local source
+TOGGLES_ORG?=registry.devshift.net/fabric8-services
+
 .PHONY: help
 # Based on https://gist.github.com/rcmachado/af3db315e31383502660
 ## Display this help text.
@@ -32,6 +37,13 @@ OC_PASSWORD := developer
 OC_SA_USERNAME := devtools-sa
 OC_SA_PASSWORD := devtools-sa
 MINISHIFT_IP := $(shell minishift ip)
+
+## the '-' at the beginning of the line will ignore failure of `oc project` if the project already exists.
+$(FABRIC8_MARKER):
+	echo "create project "
+	@-oc new-project ${FABRIC8_PROJECT} 2>/dev/null
+	oc project ${FABRIC8_PROJECT}
+	@touch $@
 
 .PHONY: init
 init: tmp ./tmp/init.touch
@@ -81,12 +93,12 @@ deploy-auth: $(KEDGE_BIN) login
 	@MINISHIFT_IP=$(MINISHIFT_IP) kedge apply -f auth.yml
 
 .PHONY: deploy-toggles
-deploy-toggles: $(KEDGE_BIN) login
+deploy-toggles: $(KEDGE_BIN) login $(FABRIC8_MARKER)
 	@kedge apply -f toggles-db.yml
-	@kedge apply -f toggles.yml
+	@MINISHIFT_IP=$(MINISHIFT_IP) TOGGLES_ORG=$(TOGGLES_ORG) GITHUB_CLIENT_SECRET=$(GITHUB_CLIENT_SECRET) kedge apply -f toggles.yml
 
 .PHONY: deploy-toggles-service
-deploy-toggles-service: $(KEDGE_BIN) login
+deploy-toggles-service: $(KEDGE_BIN) login $(FABRIC8_MARKER)
 	@kedge apply -f toggles-service.yml
 
 .PHONY: deploy-tenant
@@ -105,4 +117,7 @@ deploy-wit: $(KEDGE_BIN) login
 deploy-ui: $(KEDGE_BIN) login
 	@MINISHIFT_IP=$(MINISHIFT_IP) kedge apply -f ui.yml
 
-
+.PHONY: clean-minishift
+clean-minishift: login ## removes the fabric8 project on Minishift
+	rm -rf $(FABRIC8_MARKER)
+	oc project ${FABRIC8_PROJECT} && oc delete project ${FABRIC8_PROJECT}
