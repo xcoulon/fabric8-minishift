@@ -11,16 +11,18 @@ deployments:
       value: "1776877589a8e28f67d3"
     - name: GITHUB_CLIENT_SECRET
       value: "[[ GITHUB_CLIENT_SECRET ]]"
+    - name: TOGGLES_CONTEXT
+      value: "/[[ TOGGLES_CONTEXT ]]"                    
     - name: GITHUB_CALLBACK_URL
-      value: "http://toggles-fabric8.[[ MINISHIFT_IP ]].nip.io/api/auth/callback"                    
+      value: "http://admin-proxy-fabric8.[[ MINISHIFT_IP ]].nip.io/[[ TOGGLES_CONTEXT ]]/api/auth/callback"                    
 services:
 - name: toggles
   type: NodePort
   ports:
     - port: 4242
       nodePort: 31200
-routes:	
-- name: toggles	
-  to:	
-    kind: Service	
-    name: toggles
+# routes:	
+# - name: toggles	
+#   to:	
+#     kind: Service	
+#     name: toggles
