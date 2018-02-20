@@ -12,22 +12,21 @@ configMaps:
       address = ":8082"
       readOnly = true
 
-      
       [entryPoints]
-          [entryPoints.http]
-          address = ":8080"
+        [entryPoints.http]
+        address = ":8080"
 
       [file]
       watch = true
-
-      [backends]
-        [backends.toggles]
-          [backends.toggles.servers.server1]
-          url = "http://toggles/"
 
       [frontends]
         [frontends.toggles]
         backend = "toggles"
           [frontends.toggles.routes.test_1]
-          rule = "PathPrefixStrip:/toggles"
+          rule = "PathPrefixStrip:/toggles/"
           passHostHeader = true
+
+      [backends]
+        [backends.toggles]
+          [backends.toggles.servers.server1]
+          url = "http://toggles:4242"
