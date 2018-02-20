@@ -1,0 +1,32 @@
+configMaps:
+- name: admin-proxy-cm
+  data:
+    traefik.toml: |-
+      defaultEntryPoints = ["http"]
+      watch = true
+
+      [accessLog]
+      format = "json"
+
+      [web]
+      address = ":8082"
+      readOnly = true
+
+      [entryPoints]
+        [entryPoints.http]
+        address = ":8080"
+
+      [file]
+      watch = true
+
+      [frontends]
+        [frontends.toggles]
+        backend = "toggles"
+          [frontends.toggles.routes.test_1]
+          rule = "PathPrefixStrip:/toggles/"
+          passHostHeader = true
+
+      [backends]
+        [backends.toggles]
+          [backends.toggles.servers.server1]
+          url = "http://toggles:4242"

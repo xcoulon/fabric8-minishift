@@ -92,6 +92,11 @@ deploy-auth: $(KEDGE_BIN) login
 	@kedge apply -f auth-db.yml
 	@MINISHIFT_IP=$(MINISHIFT_IP) kedge apply -f auth.yml
 
+.PHONY: deploy-admin-proxy
+deploy-admin-proxy: $(KEDGE_BIN) login $(FABRIC8_MARKER)
+	@kedge apply -f admin-proxy-cm.yml
+	@kedge apply -f admin-proxy.yml
+
 .PHONY: deploy-toggles
 deploy-toggles: $(KEDGE_BIN) login $(FABRIC8_MARKER)
 	@kedge apply -f toggles-db.yml
