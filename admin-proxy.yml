@@ -23,6 +23,9 @@ services:
   ports:
   - port: 8080
     nodePort: 31600
+- name: admin-proxy-console
+  type: NodePort
+  ports:
   - port: 8082
     nodePort: 31610
 routes:	
