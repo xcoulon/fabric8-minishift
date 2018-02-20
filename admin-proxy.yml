@@ -21,9 +21,9 @@ services:
 - name: admin-proxy
   type: NodePort
   ports:
-  - port: 80
-    nodePort: 31600
   - port: 8080
+    nodePort: 31600
+  - port: 8082
     nodePort: 31610
 routes:	
 - name: admin-proxy	
