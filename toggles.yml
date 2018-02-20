@@ -3,7 +3,7 @@ labels:
   service: toggles
 deployments:
 - containers:
-  - image: [[ TOGGLES_IMAGE ]]/fabric8-toggles:latest
+  - image: [[ TOGGLES_ORG ]]/fabric8-toggles:latest
     env:
     - name: DATABASE_URL
       value: "postgres://user:password@toggles-db:5432/unleashdb"
@@ -12,7 +12,7 @@ deployments:
     - name: GITHUB_CLIENT_SECRET
       value: "[[ GITHUB_CLIENT_SECRET ]]"
     - name: GITHUB_CALLBACK_URL
-      value: "http://toggles-fabric8.[[ MINISHIFT_IP ]].xip.io/api/auth/callback"                    
+      value: "http://toggles-fabric8.[[ MINISHIFT_IP ]].nip.io/api/auth/callback"                    
 services:
 - name: toggles
   type: NodePort
