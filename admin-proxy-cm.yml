@@ -1,0 +1,38 @@
+configMaps:
+- name: admin-proxy-cm
+  data:
+    traefik.toml: |-
+      defaultEntryPoints = ["http"]
+      watch = true
+
+      [accessLog]
+      format = "json"
+
+      [web]
+      address = ":8082"
+      readOnly = true
+
+        [web.statistics]
+        recentErrors = 10
+
+        [web.metrics.prometheus]
+        buckets=[0.1,0.3,1.2,5.0]
+
+      [entryPoints]
+          [entryPoints.http]
+          address = ":8080"
+
+      [file]
+      watch = true
+
+      [backends]
+        [backends.toggles]
+          [backends.toggles.servers.server1]
+          url = "http://f8toggles/"
+
+      [frontends]
+        [frontends.toggles]
+        backend = "toggles"
+          [frontends.toggles.routes.test_1]
+          rule = "PathPrefixStrip:/toggles"
+          passHostHeader = true
