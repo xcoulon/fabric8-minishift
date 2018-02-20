@@ -28,7 +28,7 @@ configMaps:
       [backends]
         [backends.toggles]
           [backends.toggles.servers.server1]
-          url = "http://f8toggles/"
+          url = "http://toggles/"
 
       [frontends]
         [frontends.toggles]
