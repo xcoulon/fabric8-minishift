@@ -14,7 +14,7 @@ deployments:
     - name: TOGGLES_CONTEXT
       value: "/[[ TOGGLES_CONTEXT ]]"                    
     - name: GITHUB_CALLBACK_URL
-      value: "http://admin-proxy-fabric8.[[ MINISHIFT_IP ]].nip.io/[[ TOGGLES_CONTEXT ]]/api/auth/callback"                    
+      value: "[[ GITHUB_CALLBACK_URL ]]"                    
 services:
 - name: toggles
   type: NodePort
