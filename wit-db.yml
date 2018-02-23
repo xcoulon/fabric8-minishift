@@ -2,11 +2,11 @@ name: wit-db
 labels:
   service: wit
 deployments:
-  - containers:
-    - image: registry.centos.org/postgresql/postgresql:9.6
-      env:
-      - name: POSTGRESQL_ADMIN_PASSWORD
-        value: mysecretpassword
+- containers:
+  - image: registry.centos.org/postgresql/postgresql:9.6
+    env:
+    - name: POSTGRESQL_ADMIN_PASSWORD
+      value: mysecretpassword
 services:
 - name: wit-db
   type: NodePort

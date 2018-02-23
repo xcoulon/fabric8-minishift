@@ -2,8 +2,8 @@ name: toggles-service
 labels:
   service: toggles-service
 deployments:
-  - containers:
-    - image: 172.30.1.1:5000/fabric8/fabric8-toggles-service:latest
+- containers:
+  - image: registry.devshift.net/fabric8-services/fabric8-toggles-service:latest
     env:
     - name: F8_AUTH_URL
       value: "http://auth:8089"

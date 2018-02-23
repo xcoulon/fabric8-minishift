@@ -2,32 +2,32 @@ name: admin-proxy
 labels: 
   service: admin-proxy
 deployments:
-  - containers:
-    - image: traefik:v1.5.2
-      # args:
-      #   - '-c /etc/traefik/traefik.toml'
-      env:
-      volumeMounts:
-      - name: admin-proxy-config
-        mountPath: /etc/traefik
-    volumes:
+- containers:
+  - image: traefik:v1.5.2
+    # args:
+    #   - '-c /etc/traefik/traefik.toml'
+    env:
+    volumeMounts:
     - name: admin-proxy-config
-      configMap:
-        name: admin-proxy-cm
-        items:
-        - key: traefik.toml
-          path: traefik.toml
+      mountPath: /etc/traefik
+  volumes:
+  - name: admin-proxy-config
+    configMap:
+      name: admin-proxy-cm
+      items:
+      - key: traefik.toml
+        path: traefik.toml
 services:
 - name: admin-proxy
   type: NodePort
   ports:
   - port: 8080
-    nodePort: 31600
+    nodePort: 31700
 - name: admin-proxy-console
   type: NodePort
   ports:
   - port: 8082
-    nodePort: 31610
+    nodePort: 31710
 routes:	
 - name: admin-proxy	
   to:	
