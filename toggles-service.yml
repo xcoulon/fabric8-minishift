@@ -9,9 +9,6 @@ deployments:
       value: "http://auth:8089"
     - name: F8_TOGGLES_URL
       value: "http://toggles:4242/api"
-    - name: F8_KEYCLOAK_URL
-      # value: "https://sso.prod-preview.openshift.io"
-      value: "http://keycloak:8080"
 services:
 - name: toggles-service
   type: NodePort

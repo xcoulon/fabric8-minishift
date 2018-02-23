@@ -10,4 +10,4 @@ services:
   type: NodePort
   ports:
   - port: 5432
-    nodeport: 31010
+    nodePort: 31010
