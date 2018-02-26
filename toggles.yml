@@ -15,6 +15,8 @@ deployments:
       value: "/[[ TOGGLES_CONTEXT ]]"                    
     - name: GITHUB_CALLBACK_URL
       value: "[[ GITHUB_CALLBACK_URL ]]"                    
+    - name: DEV_MODE
+      value: "[[ DEV_MODE: false ]]"
 services:
 - name: toggles
   type: NodePort
