@@ -100,7 +100,7 @@ deploy-admin-proxy: $(KEDGE_BIN) login $(FABRIC8_MARKER)
 .PHONY: deploy-toggles
 deploy-toggles: $(KEDGE_BIN) login $(FABRIC8_MARKER)
 	@kedge apply -f toggles-db.yml
-	@MINISHIFT_IP=$(MINISHIFT_IP) TOGGLES_ORG=$(TOGGLES_ORG) GITHUB_CLIENT_SECRET=$(GITHUB_CLIENT_SECRET) kedge apply -f toggles.yml
+	@MINISHIFT_IP=$(MINISHIFT_IP) TOGGLES_ORG=$(TOGGLES_ORG) kedge apply -f toggles.yml
 
 .PHONY: deploy-toggles-service
 deploy-toggles-service: $(KEDGE_BIN) login $(FABRIC8_MARKER)
