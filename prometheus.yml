@@ -1,0 +1,67 @@
+name: prometheus
+
+deployments:
+- containers:
+  - image: prom/prometheus
+    imagePullPolicy: IfNotPresent
+    volumeMounts:
+    - name: prometheus-config
+      mountPath: /etc/prometheus
+    - name: prometheus-storage
+      mountPath: /prometheus
+  volumes:
+  - name: prometheus-config
+    configMap:
+      name: prometheus-config
+      items:
+      - key: prometheus.yml
+        path: prometheus.yml
+
+services:
+- ports:
+  - port: 9090
+    targetPort: 9090
+
+routes:
+- name: prometheus
+  to:
+    kind: Service
+    name: prometheus
+
+volumeClaims:
+- name: prometheus-storage
+  size: 2Gi
+
+
+configMaps:
+- name: prometheus-config
+  data:
+    prometheus.yml: |+
+      global:
+        scrape_interval: 15s
+        scrape_timeout: 10s
+        evaluation_interval: 15s
+      alerting:
+        alertmanagers:
+        - static_configs:
+          - targets: []
+          scheme: http
+          timeout: 10s
+      scrape_configs:
+      - job_name: prometheus
+        scrape_interval: 15s
+        scrape_timeout: 10s
+        metrics_path: /metrics
+        scheme: http
+        static_configs:
+        - targets:
+          - localhost:9090
+  
+      - job_name: [[ APP_NAME: wit ]]
+        scrape_interval: 15s
+        scrape_timeout: 10s
+        metrics_path: /metrics
+        scheme: [[ APP_SCHEME: http ]]
+        static_configs:
+        - targets:
+          - [[ APP_URL: http://wit:8080 ]]
