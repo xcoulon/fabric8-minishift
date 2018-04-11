@@ -97,6 +97,14 @@ deploy-admin-proxy: $(KEDGE_BIN) login $(FABRIC8_MARKER)
 	@kedge apply -f admin-proxy-cm.yml
 	@kedge apply -f admin-proxy.yml
 
+.PHONY: undeploy-admin-proxy
+undeploy-admin-proxy: $(KEDGE_BIN) login $(FABRIC8_MARKER)
+	@kedge delete -f admin-proxy-cm.yml
+	@kedge delete -f admin-proxy.yml
+
+.PHONY: redeploy-admin-proxy
+redeploy-admin-proxy: undeploy-admin-proxy deploy-admin-proxy
+
 .PHONY: deploy-toggles
 deploy-toggles: $(KEDGE_BIN) login $(FABRIC8_MARKER)
 	@kedge apply -f toggles-db.yml

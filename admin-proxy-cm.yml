@@ -4,9 +4,13 @@ configMaps:
     traefik.toml: |-
       defaultEntryPoints = ["http"]
       watch = true
+      logLevel = "INFO"
 
       [accessLog]
       format = "json"
+
+      [traefikLog]
+      format   = "json"
 
       [web]
       address = ":8082"
@@ -23,7 +27,7 @@ configMaps:
         [frontends.toggles]
         backend = "toggles"
           [frontends.toggles.routes.test_1]
-          rule = "PathPrefixStrip:/toggles/"
+          rule = "PathPrefix:/toggles/{root:$},/toggles/public/{asset:.*},/toggles/api/admin/{resource:.*};ReplacePathRegex:^/toggles/(.*) /$1"
           passHostHeader = true
 
       [backends]
