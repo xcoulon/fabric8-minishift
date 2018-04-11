@@ -3,7 +3,7 @@ labels:
   service: toggles
 deployments:
 - containers:
-  - image: [[ TOGGLES_ORG ]]/fabric8-toggles:latest
+  - image: "[[ TOGGLES_ORG: 172.30.1.1:5000/fabric8 ]]/fabric8-toggles:latest"
     env:
     - name: DATABASE_URL
       value: "postgres://user:password@toggles-db:5432/unleashdb"
