@@ -27,7 +27,7 @@ configMaps:
         [frontends.toggles]
         backend = "toggles"
           [frontends.toggles.routes.test_1]
-          rule = "PathPrefix:/toggles/{root:$},/toggles/public/{asset:.*},/toggles/api/admin/{resource:.*};ReplacePathRegex:^/toggles/(.*) /$1"
+          rule = "PathPrefix:/toggles/{root:$},/toggles/public/{asset:.*},/toggles/api/admin/{resource:.*},/toggles/api/auth/{callbacks:.*};ReplacePathRegex:^/toggles/(.*) /$1"
           passHostHeader = true
 
       [backends]
